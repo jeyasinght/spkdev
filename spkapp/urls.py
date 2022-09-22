@@ -18,7 +18,7 @@ from django.urls import path
 from spkapp import views
 
 urlpatterns = [
-    path('', views.login),
+    path('', views.dologin, name="dologin"),
+    path('dohome/', views.dohome, name="dohome"),
+    path('dologout/', views.dologout, name="dologout"),
 ]
-
-

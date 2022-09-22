@@ -1,6 +1,7 @@
 .{
 	background: linear-gradient(135deg, #0d98ba, #dc0606ca);
 }
+
  body{
     margin: 0;
     padding: 0;
@@ -40,7 +41,6 @@ h1{
 	}
 
 	.login-box p{
-
 		margin: 0;
 		padding: 0;
 		font-weight: bold;
@@ -67,6 +67,7 @@ h1{
 		background: #ffc107;
 		color:#000;
 	}
+
 	.login-box a{
 		text-decoration: none;
 		font-size: 12px;
@@ -75,7 +76,6 @@ h1{
 
 	}
 
-
 	.login-box a:hover{
 		color:#fff;
 	}
@@ -83,10 +83,24 @@ h1{
 
 	.login-box input[type="submit"]{
 	    border: none;
-		background: #ffc107;
+		background: #fff;
 		outline: none;
 		height: 40px;
-		color:#fff;
-		font-size: 18px;
+		color: navy
+		font-size: 50px;
 		border-radius: 10px;
 	}
+    .name{
+
+		position: relative;
+		top: 180px;
+		color: navy;
+
+	}
+    .login-box label {
+        color: #fff;
+        font-weight: bold;
+        display: block;
+        width: 150px;
+
+    }
