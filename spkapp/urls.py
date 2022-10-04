@@ -1,24 +1,21 @@
-"""spkdev URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from spkapp import views
 
 urlpatterns = [
     path('', views.dologin, name="dologin"),
     path('dohome/', views.dohome, name="dohome"),
     path('dologout/', views.dologout, name="dologout"),
+    path('neworder/', views.newOrder, name="neworder"),
+    path('formorder/', views.formorder, name="newform"),
+    path('approveorder/', views.approveOrder, name="approveorder"),
+    path('editorder/<order_id>', views.editOrder, name="editorder"),
+    path('orderdetails/', views.orderDetails, name="orderdetails"),
+    path('vieworder/', views.viewOrder, name="vieworder"),
+    path('report/', views.viewReport, name="report"),
+    path('registration/', views.userRegistration, name="registration"),
+
+
+    path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'), # AJAX
+
 ]
