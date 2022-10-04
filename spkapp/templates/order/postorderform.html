@@ -1,0 +1,56 @@
+{% extends 'home/navi.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+     <link rel="stylesheet" href="{% static 'orderform.css' %}">
+</head>
+<body>
+<br/> <br/>
+
+
+<h1>Add order form</h1>
+    {% if submitted %}
+      Your order was submitted successfully!!
+    {% else %}
+    <form action=""  id="personForm" class="order" data-cities-url="{% url 'ajax_load_cities' %}" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" name="" value="Submit Order">
+    </form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_category").change(function () {
+        const url = $("#personForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const categoryId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'category_id': categoryId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_product").html(data);  // replace the contents of the city input with the data that came from the server
+
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (product) {
+                    html_data += `<option value="${product.id}">${product.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_product").html(html_data);
+
+                */
+
+            }
+        });
+
+    });
+</script>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

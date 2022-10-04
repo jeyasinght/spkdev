@@ -1,0 +1,22 @@
+.table {
+    background: lightblue;
+    width: vertical;
+    height: 802px;
+    top: 500px;
+    padding-top: 80;
+}
+th {
+  height: 50px;
+}
+table, th, td {
+  border: 1px solid;
+}
+td {
+  text-align: center;
+  height: 5px;
+}
+table {
+  table-layout: auto;
+  width: 100%;
+  border-collapse: collapse;
+}

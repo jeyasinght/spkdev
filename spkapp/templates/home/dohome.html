@@ -1,0 +1,60 @@
+{% extends 'home/navi.html' %}
+{% load static %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SPK Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home_form.css' %}">
+</head>
+{% csrf_token %}
+<body>
+  <div class="order">
+     {% if user.is_authenticated %}
+        <table class="table" style="overflow-x:auto;">
+           {% if all %}
+           <table class="table-class">
+              <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Order Date</th>
+                      <th scope="col">Requester</th>
+                      <th scope="col">Project Name</th>
+                      <th scope="col">Product Category</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Remarks</th>
+                      <th scope="col">Approver</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Status</th>
+                    </tr>
+              </thead>
+             {% for order in all %}
+               <tbody>
+                 <tr>
+                     <th scope="row">{{ forloop.counter }}</th>
+                     <td>{{order.order_date}} </td>
+                     <td>{{order.requester}} </td>
+                     <td>{{order.projectname}} </td>
+                     <td>{{order.category}} </td>
+                     <td>{{order.product}} </td>
+                     <td>{{order.quantity}} </td>
+                     <td>{{order.remarks}} </td>
+                     <td>{{order.approver}} </td>
+                     <td>{{order.approved_date}} </td>
+                     <td>{{order.status}} </td>
+                 </tr>
+               <tbody>
+              {% endfor %}
+          </table>
+          {% endif %}
+        </table>
+      {% else %}
+      Login First
+    {% endif %}
+  </div>
+</body>
+</html>
+{% endblock %}

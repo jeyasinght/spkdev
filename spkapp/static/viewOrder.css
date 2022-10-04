@@ -1,0 +1,43 @@
+*{
+  margin: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding: 0;
+}
+.table-class {
+    background: lightblue;
+    width: vertical;
+    height: 802px;
+    top: 500px;
+    padding-top: 180;
+
+}
+th {
+  height: 50px;
+}
+table, th, td {
+  border: 1px solid;
+}
+td {
+  text-align: center;
+  height: 5px;
+}
+    table {
+    margin-top: 60px;
+    table-layout: auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+div1{
+
+Overflow-x:scroll;//add horizontal bar option in html
+Overflow-y:scroll; //add vertical bar option in html
+
+}
+
+
+
+
+

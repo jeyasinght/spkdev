@@ -1,0 +1,21 @@
+{% extends 'home/navi.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Order</title>
+    <link rel="stylesheet" href="{% static 'editorder_form.css' %}">
+</head>
+<body>
+  Edit order
+    {{order}}
+  <form action="#" method="post" class="editorder" >
+      {% csrf_token %}
+      {{ form.as_p  }}
+     <input type="submit" name="" value="Update Order">
+
+  </form>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,79 @@
+
+.editorder {
+  padding:75px 0px;
+  width: 2000px;
+  height: 500px;
+
+
+}
+
+
+p {
+  display: block;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.editorder label {
+  font-weight: bold;
+  float: left;
+  size: 20px;
+  font-size: 15px;
+  padding: 0px 10px 0px 0px;
+  width: 130px;
+}
+
+.editorder input[type="text"]{
+  width:15.5%;
+  border-radius: 4px;
+  height: 30px;
+  border: 1px solid rgb(70, 69, 69);
+
+}
+
+.editorder select{
+  width:15.5%;
+  border-radius: 4px;
+  height: 30px;
+}
+
+.editorder input[type="number"]{
+  width:15.5%;
+  border-radius: 4px;
+  height: 30px;
+  border: 1px solid rgb(70, 69, 69);
+}
+
+.editorder input[type="textarea"]{
+  border-radius: 4px;
+  height: 30px;
+  border: 1px solid rgb(70, 69, 69);
+  width: 300px;
+  height: 150px;
+}
+
+
+input[type="submit"]{
+  width: 15.5%;
+  padding: 15px 15px;
+  background-color: rgb(171, 245, 201);
+  color: #073517;
+  border-radius: 10px;
+  margin:20px 135px;
+  cursor: pointer;
+  border: 1px solid rgb(70, 69, 69);
+   }
+
+.editorder input[type="submit"]:hover
+ {
+	  cursor: pointer;
+		background: #ffc107;
+		color:#000;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+

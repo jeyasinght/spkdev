@@ -1,0 +1,70 @@
+
+body{
+margin: 0px 0px;
+}
+
+.main{
+max-width: 600px;
+width: 100%;
+background: #0d98ba;
+padding: 30px;
+position: absolute;
+margin-top: 78px;
+}
+
+label[id="l-des"]{
+   margin-top: 4px;
+   padding-left: 10px;
+}
+
+input[type="text"]{
+width:50%;
+padding: 10px 10px;
+margin:10px 0;
+border-radius: 4px;
+outline: none;
+border: 1px solid #ddd;
+
+}
+
+button[type="submit"]{
+width: 50%;
+padding: 15px 15px;
+background-color: #fff;
+color: #0d98ba;
+border-radius: 10px;
+border: none;
+margin:20px 154px;
+cursor: pointer;
+}
+
+button[type="submit"]:hover{
+background-color: #45a8ba;
+}
+
+label{
+width: 150px;
+display: inline-block;
+}
+
+select{
+padding: 6px;
+font-size: 14px;
+}
+
+textarea{
+resize: horizontal;
+width: 50%;
+margin: 15px 0;
+}
+
+
+
+.select-field{
+width: 50%;
+margin: 5px 0;
+outline: 0;
+border: none;
+padding: 8px 8px;
+border: 1px solid #ddd;
+}

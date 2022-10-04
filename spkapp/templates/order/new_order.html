@@ -1,0 +1,66 @@
+{% extends 'home/navi.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Order</title>
+      <link rel="stylesheet" href="{% static 'new_order.css' %}">
+</head>
+<body>
+  {% if user.is_authenticated %}
+    <div class ="main">
+        <h2>New Order</h2>
+        <form action="#" method="post" >
+            {% csrf_token %}
+            <div>
+              <label for="re-name">Requester</label>
+              <input type="text" name="re-name" id="re-name" value="{{ request.user.first_name }}" readonly>
+            </div>
+            <div class="project_name">
+              <label for="pn-name">Project Name</label>
+                 <select name="p-name" id="pn-name" class="select-field">
+                    <option value="">--Please choose the project--</option>
+                    <option value="proejct1">Project-1</option>
+                    <option value="proejct2">Project-2</option>
+                    <option value="proejct3">Project-3</option>
+                   </select>
+            </div>
+            <div>
+              <label for="c-name">Product Category</label>
+                  <select name="p-category" id="c-name" class="select-field">
+                     <option value="">--Please choose the category--</option>
+                     <option value="proejct1">Timber</option>
+                     <option value="approver">Steel</option>
+                     <option value="admin">Electrical</option>
+                  </select>
+            </div>
+            <div>
+              <label for="p-name">Product</label>
+                 <select name="product" id="p-name" class="select-field">
+                     <option value="">--Please choose the category--</option>
+                     <option value="proejct1">Product 1</option>
+                     <option value="approver">Product 2</option>
+                     <option value="admin">Product 3</option>
+                  </select>
+            </div>
+            <div>
+              <label for="q-name">Quantity</label>
+              <input type="text" name="quantity" id="q-name">
+            </div>
+            <div class="remarks">
+              <label for="l-des">Remarks</label>
+              <textarea name="l-des" id ="l-des"></textarea>
+            </div>
+            <div>
+              <button type="submit">Submit Order</button>
+            </div>
+        </form>
+</div>
+   {% else %}
+     redirect to login page
+  {% endif %}
+</body>
+</html>
+
+{% endblock %}

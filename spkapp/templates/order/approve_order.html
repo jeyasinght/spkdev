@@ -1,0 +1,62 @@
+{% extends 'home/navi.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'approve_order_form.css' %}">
+</head>
+<body>
+ {% if user.is_authenticated %}
+    <div class="result>">
+         <div class="table" style="overflow-x:auto;">
+             {% if all %}
+             <table class="table-class">
+                <thead>
+                   <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Edit</th>
+                      <th scope="col">Requester</th>
+                      <th scope="col">Project Name</th>
+                      <th scope="col">Product Category</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Remarks</th>
+                      <th scope="col">Approver</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Order Date</th>
+                      <th scope="col">Approved Date</th>
+
+                   </tr>
+                </thead>
+                {% for order in all %}
+                <tbody>
+                   <tr>
+                     <th scope="row">{{ forloop.counter }}</th>
+                     <td><a href="{% url 'editorder' order.id %}"> Edit</a> </td>
+                     <td>{{order.requester}} </td>
+                     <td>{{order.projectname}} </td>
+                     <td>{{order.category}} </td>
+                     <td>{{order.product}} </td>
+                     <td>{{order.quantity}} </td>
+                     <td>{{order.remarks}} </td>
+                     <td>{{order.approver}} </td>
+                     <td>{{order.status}} </td>
+                     <td>{{order.order_date}} </td>
+                     <td>{{order.approved_date}} </td>
+                 </tr>
+                  </tr>
+                </tbody>
+                {% endfor %}
+             </table>
+             {% endif %}
+         </div>
+    </div>
+ {% else %}
+      Login First
+ {% endif %}
+</body>
+</html>
+
+{% endblock %}
