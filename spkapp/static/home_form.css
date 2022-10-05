@@ -3,7 +3,7 @@
     width: vertical;
     height: 802px;
     top: 500px;
-    padding-top: 80;
+    padding-top: 80px;
 }
 th {
   height: 50px;
@@ -19,4 +19,6 @@ table {
   table-layout: auto;
   width: 100%;
   border-collapse: collapse;
+  padding-top: 80px;
 }
+
