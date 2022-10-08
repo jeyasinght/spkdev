@@ -4,15 +4,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
     <link rel="stylesheet" href="{% static 'approve_order_form.css' %}">
 </head>
 <body>
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
  {% if user.is_authenticated %}
-    <div class="result>">
-         <div class="table" style="overflow-x:auto;">
-             {% if all %}
-             <table class="table-class">
+
+              {% if all %}
+             <table class="table-wrapper-scroll-y">
                 <thead>
                    <tr>
                       <th scope="col">#</th>
@@ -27,7 +26,6 @@
                       <th scope="col">Status</th>
                       <th scope="col">Order Date</th>
                       <th scope="col">Approved Date</th>
-
                    </tr>
                 </thead>
                 {% for order in all %}
@@ -51,11 +49,10 @@
                 {% endfor %}
              </table>
              {% endif %}
-         </div>
-    </div>
  {% else %}
       Login First
  {% endif %}
+</div>
 </body>
 </html>
 

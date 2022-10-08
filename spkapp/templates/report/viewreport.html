@@ -43,10 +43,11 @@
                   </select>
              </div>
              <div class="city">
-                 <input type="submit" value="Submit" class ="button">
+                 <input type="submit" value="Submit" class ="button" role="button" href ="{% url 'exporttoCSV' %}">
              </div>
              <div class="excel">
-                 <input type="submit" value="Export to Excel" class ="button">
+                  <a class="button" href ="{% url 'exporttoCSV' %}" role="button">Export to Excel</a>
+
              </div>
             </form>
         </div>

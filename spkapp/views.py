@@ -3,8 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import order_form
 from .models import order_model, Category, Product
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+import csv
 
+
+# Create your views here.
 
 # Create your views here.
 
@@ -105,8 +108,58 @@ def formorder(request):
     return render(request, 'order/postorderform.html', {'form': form, 'submitted': submitted})
 
 
-def load_cities(request):
+def load_cities1(request):
     category_id = request.GET.get('category_id')
+    print(category_id)
     products = Product.objects.filter(category_id=category_id).all()
     return render(request, 'persons/city_dropdown_list_options.html', {'cities': products})
     # return JsonResponse(list(cities.values('id', 'name')), safe=False)
+
+
+def load_cities(request):
+    category_id = request.GET.get('category_id')
+    print(category_id)
+    products = Product.objects.filter(category_id=category_id).all()
+    return render(request, 'persons/city_dropdown_list_options.html', {'cities': products})
+    # return JsonResponse(list(cities.values('id', 'name')), safe=False)
+
+
+def formorder1(request):
+    submitted = False
+    if request.method == "POST":
+        form = order_form(request.POST)
+        if form.is_valid():
+            form.cleaned_data['order_date']
+            task_list = form.save(commit=False)
+            task_list.requester = request.user
+            task_list.save()
+            return HttpResponseRedirect('/formorder?submitted=True')
+    else:
+        form = order_form
+        if 'submitted' in request.GET:
+            submitted = True
+    return render(request, 'order/test2.html', {'form': form, 'submitted': submitted})
+
+
+def exporttoCSV(request):
+    response = HttpResponse()
+    response['content_type'] = 'text/csv'
+    response['Content-Disposition'] = 'attachment;filename=order.csv'
+    # create a CSV writer
+    writer = csv.writer(response)
+    orders = order_model.objects.all()
+    # add column heading to CSV file
+
+    writer.writerow(
+        ['#', 'Order Date', 'Requester', 'Project Name', 'Product Category', 'Product', 'Quantity', 'Remarks',
+         'Approver', 'Approved Date', 'Status'])
+
+    # loop through the order
+    i = 0
+    for order in orders:
+        i = i + 1
+        writer.writerow(
+            [i, order.order_date, order.requester, order.projectname, order.category, order.product, order.quantity,
+             order.remarks, order.approver, order.approved_date, order.status])
+
+    return response

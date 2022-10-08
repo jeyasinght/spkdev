@@ -11,7 +11,7 @@
   {% if user.is_authenticated %}
     <div class ="main">
         <h2>New Order</h2>
-        <form action="#" method="post" class="order" >
+        <form action="" id="personForm" method="post" class="order" data-cities-url="{% url 'ajax_load_cities' %}">
             {% csrf_token %}
             <div>
               <label for="re-name">Requester</label>
@@ -28,12 +28,14 @@
             </div>
             <div>
               <label for="c-name">Product Category</label>
+                  {% if cat_all %}
                   <select name="p-category" id="c-name" class="select-field">
-                     <option value="">--Please choose the category--</option>
-                     <option value="proejct1">Timber</option>
-                     <option value="approver">Steel</option>
-                     <option value="admin">Electrical</option>
+                      <option value="">--Please choose the project--</option>
+                     {% for or in cat_all %}
+                        <option value="category">{{ or.name }}</option>
+                     {% endfor %}
                   </select>
+                  {% endif %}
             </div>
             <div>
               <label for="p-name">Product</label>
@@ -56,6 +58,37 @@
               <button type="submit">Submit Order</button>
             </div>
         </form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#c-name").change(function () {
+        const url = $("#personForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const categoryId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'name': 'Timber'       // categoryId add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#p-name").html(data);  // replace the contents of the city input with the data that came from the server
+
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (product) {
+                    html_data += `<option value="${product.id}">${product.name}</option>`
+                });
+                console.log(html_data);
+                $("#p-name").html(html_data);
+
+                */
+
+            }
+        });
+
+    });
+</script>
 </div>
    {% else %}
      redirect to login page

@@ -1,7 +1,12 @@
-.order {
+body{
+  background: lightblue;
 
+}
+
+.order {
   width: 2000px;
   height: 500px;
+
 }
 
 p {

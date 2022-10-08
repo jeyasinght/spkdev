@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.dologin, name="dologin"),
     path('dohome/', views.dohome, name="dohome"),
     path('dologout/', views.dologout, name="dologout"),
-    path('neworder/', views.newOrder, name="neworder"),
+    path('neworder/', views.formorder1, name="testneworder"),
     path('formorder/', views.formorder, name="newform"),
     path('approveorder/', views.approveOrder, name="approveorder"),
     path('editorder/<order_id>', views.editOrder, name="editorder"),
@@ -15,6 +15,7 @@ urlpatterns = [
     path('report/', views.viewReport, name="report"),
     path('registration/', views.userRegistration, name="registration"),
 
+    path('exporttoCSV/', views.exporttoCSV, name="exporttoCSV"),
 
     path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'), # AJAX
 

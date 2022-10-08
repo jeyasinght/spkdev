@@ -5,10 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Details</title>
-     <link rel="stylesheet" href="{% static 'orderform.css' %}">
+     <link rel="stylesheet" href="{% static 'new.css' %}">
 </head>
-<body>
-<br/> <br/>
+br/> <br/>
 
 {% if user.is_authenticated %}
 <h1>Add order form</h1>
@@ -54,6 +53,4 @@
 {% else %}
 Login First
 {% endif %}
-</body>
-</html>
 {% endblock %}

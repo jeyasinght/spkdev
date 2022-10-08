@@ -11,12 +11,11 @@
 </head>
 {% csrf_token %}
 <body>
-  <div class="order">
-     {% if user.is_authenticated %}
-        <table class="table" style="overflow-x:auto;">
-           {% if all %}
-           <table class="table-class">
-              <thead>
+  {% if user.is_authenticated %}
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      {% if all %}
+        <table class="table-wrapper-scroll-y">
+             <thead>
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Order Date</th>
@@ -48,12 +47,11 @@
                  </tr>
                <tbody>
               {% endfor %}
-          </table>
-          {% endif %}
         </table>
-      {% else %}
+      {% endif %}
+  {% else %}
       Login First
-    {% endif %}
+  {% endif %}
   </div>
 </body>
 </html>
