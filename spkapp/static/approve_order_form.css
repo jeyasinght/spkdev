@@ -4,11 +4,9 @@ position: relative;
 height: 800px;
 overflow: auto;
 width: 100%;
-background: lightblue;
 table-layout: auto;
 }
 .table-wrapper-scroll-y {
-
 width: 100%;
 }
 
@@ -16,9 +14,11 @@ th {
   height: 50px;
   position: sticky;
   width: auto;
+  text-align: center;
 }
 table, th, td {
   border: 1px solid;
+  text-align: center;
 }
 td {
   text-align: center;

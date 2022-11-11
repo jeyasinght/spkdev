@@ -62,8 +62,6 @@ def editOrder_old(request, order_id):
 def editOrder(request, order_id):
     order = order_model.objects.get(pk=order_id)
     form = order_form(request.POST or None, instance=order)
-    print(order)
-    print(form)
     if request.method == 'POST':
         oprojectname = request.POST.get('projectname')
         projectname = Projects.objects.get(id=oprojectname)
