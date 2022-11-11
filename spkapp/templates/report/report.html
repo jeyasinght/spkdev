@@ -1,0 +1,144 @@
+{% extends 'home/navi.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<style>
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 620px;
+    overflow: auto;
+    width: 100%;
+    table-layout: auto;
+}
+</style>
+
+<br><br>
+<br>
+{% if user.is_authenticated %}
+<h3 class="text-center">Report</h3>
+<div class="container-fluid well">
+    {% if submitted %}
+      Your order was submitted successfully!!
+    {% else %}
+    <form action=""  id="personForm" class="order" data-cities-url="{% url 'ajax_load_cities' %}" method="POST">
+        {% csrf_token %}
+
+                <div class="form-group col-md-2 mb-2">
+                        <p>Project Name</p>
+                        <select class="form-control" name ="projectname" >
+                        <option disabled="true" selected>----Select Project Name----</option>
+                        {{cities}}
+                            {% for project in cities %}
+                            <option value="{{project.id}}">{{project.name}}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="form-group col-md-2 margin-left--10">
+                        <p>Category</p>
+                           <select name="programming" id="programming" class="form-control" onchange="populate(this.id)">
+                           <option disabled="true" selected>--Select Category--</option>
+                           {{categories}}
+                            {% for cat in categories %}
+                            <option value="{{cat.id}}">{{cat.name}}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="form-group col-md-2 margin-right--10">
+                        <p>Product</p>
+                        <select class="form-control" name ="product" id="id_product">
+                        </select>
+                </div>
+                <div class="form-group col-md-2 margin-right--10">
+                    <p>Status</p>
+                    <select class="form-control" name ="product" id="id_product">
+                    </select>
+                 </div>
+                <div class="form-group col-md-2 center-align">
+                        <p>.</p>
+                        <button class="btn btn-success add_item_btn" style = "padding-left: 10px;" onclick="populate()">Generate</button>
+                 </div>
+                <div class="form-group col-md-2 margin-left--3">
+                    <p>.</p>
+                    <a href="{% url 'exporttoCSV' %}"  class="btn btn-success" role="button">Export To Excel</a>
+                 </div>
+
+    </form>
+</div>
+{% if orders %}
+<div class="container-fluid text-center table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered" style="border: 1px solid;">
+        <thead>
+            <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Requester</th>
+                    <th scope="col">Project Name</th>
+                    <th scope="col">Product Category</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col">Approver</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+            </tr>
+          </thead>
+
+        <tbody>
+            {% for order in orders %}
+          <tr class="table-info">
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{order.order_date}} </td>
+              <td>{{order.requester}} </td>
+              <td>{{order.projectname}} </td>
+              <td>{{order.category}} </td>
+              <td>{{order.product}} </td>
+              <td>{{order.quantity}} </td>
+              <td>{{order.unit}} </td>
+              <td>{{order.remarks}} </td>
+              <td>{{order.approver}} </td>
+              <td>{{order.approved_date}} </td>
+              <td>{{order.status}} </td>
+          </tr>
+          {% endfor %}
+        <tbody>
+
+    </table>
+</div>
+{% endif %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+    function populate(c1){
+        var y = c1.split("_")
+        var c1=document.getElementById(c1);
+        var url = $("#personForm").attr("data-cities-url");  // get the url of the `load_courses` view
+        var programmingId = c1.value; // get the selected programming ID from the HTML input
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+            data: {
+            'category': programmingId       // add the programming id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_courses` view function
+            $("#id_product").html(data);  // replace the contents of the course input with the data that came from the server
+            }
+        });
+    }
+
+
+</script>
+    {% endif %}
+{% else %}
+Login First
+{% endif %}
+
+{% endblock %}

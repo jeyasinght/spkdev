@@ -1,0 +1,179 @@
+{% extends 'home/navi.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<br><br>
+<br>
+{% if user.is_authenticated %}
+<h3 class="text-center">New Order</h3>
+<div class="container well ">
+    {% if submitted %}
+      Your order was submitted successfully!!
+    {% else %}
+    <form action=""  id="personForm" class="order" data-cities-url="{% url 'ajax_load_cities' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+
+            <div class="row">
+
+                <div class="form-group col-md-3 mb-3">
+                    <p>Project Name</p>
+                    <select class="form-control" name ="projectname" >
+                       <option disabled="true" selected>----Select Project Name----</option>
+                       {{cities}}
+                        {% for project in cities %}
+                        <option value="{{project.id}}">{{project.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="row" id="id_repeat">
+                <div class="repeat" >
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Category</p>
+
+                           <select name="programming[]" id="programming_0" class="form-control" onchange="populate(this.id)">
+                           <option disabled="true" selected>--Select Category--</option>
+                           {{categories}}
+                            {% for cat in categories %}
+                            <option value="{{cat.id}}">{{cat.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2 margin-right-10">
+                        <p>Product</p>
+                        <select class="form-control" name ="product[]" id="id_product_0">
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Quantity</p>
+                        <input type="number" name="quantity[]" id="q-name" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Unit</p>
+                        <select name="unit[]" class="form-control">
+                           <option disabled="true" selected>--Select Unit--</option>
+                           {{punits}}
+                            {% for unit in punits %}
+                            <option value="{{unit.id}}">{{unit.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2 mb-2">
+                        <p>Remarks</p>
+                        <input type="text" name="remarks[]" id="remarks" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2 mb-2">
+                        <p>.</p>
+                        <button data-increment="1" class="btn btn-success add_item_btn">Add More</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+                <div class="form-group">
+                    <input type="submit" name=""  value="Submit Order" class="btn btn-success">
+                </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    let x = 0;
+    $(document).ready(function(){
+        $(".add_item_btn").click(function(e){
+            $newid = $(this).data("increment");
+            x = x + 1;
+            e.preventDefault();
+            $("#id_repeat").prepend(`
+                <div class="repeat" >
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Category</p>
+                           <select name="programming[]" value="programming1[]" id="programming`+`_`+ x +`" class="form-control" onchange="populate(this.id)">
+                           <option disabled="true" selected>--Select Category--</option>
+                           {{categories}}
+                            {% for cat in categories %}
+                            <option value="{{cat.id}}">{{cat.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2 margin-right-10">
+                        <p>Product</p>
+                        <select class="form-control" name ="product[]" id="id_product`+`_`+ x +`">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Quantity</p>
+                        <input type="number" name="quantity[]" id="q-name" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Unit</p>
+                        <select name="unit[]" class="form-control">
+                           <option disabled="true" selected>--Select Unit--</option>
+                           {{punits}}
+                            {% for unit in punits %}
+                            <option value="{{unit.id}}">{{unit.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2 mb-2">
+                        <p>Remarks</p>
+                        <input type="text" name="remarks[]" id="remarks" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2 mb-2">
+                        <p>.</p>
+                        <button class="btn btn-danger remove_item_btn">Remove</button>
+                    </div>
+                </div>
+        </div>`)
+        });
+
+    });
+
+
+    $(document).on('click','.remove_item_btn', function(e){
+            e.preventDefault();
+            let row_item = $(this).parent().parent();
+            $(row_item).remove();
+
+            });
+
+
+    function populate(c1){
+        var y = c1.split("_")
+        var c1=document.getElementById(c1);
+        var url = $("#personForm").attr("data-cities-url");  // get the url of the `load_courses` view
+        var programmingId = c1.value; // get the selected programming ID from the HTML input
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+            data: {
+            'category': programmingId       // add the programming id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_courses` view function
+            $("#id_product_"+ y[1]).html(data);  // replace the contents of the course input with the data that came from the server
+            }
+        });
+
+}
+
+
+</script>
+    {% endif %}
+{% else %}
+Login First
+</div>
+{% endif %}
+
+{% endblock %}
