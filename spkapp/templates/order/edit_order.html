@@ -4,18 +4,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Order</title>
-    <link rel="stylesheet" href="{% static 'editorder_form.css' %}">
-</head>
-<body>
-  Edit order
-    {{order}}
-  <form action="#" method="post" class="editorder" >
-      {% csrf_token %}
-      {{ form.as_p  }}
-     <input type="submit" name="" value="Update Order">
+    <title>Order Details</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  </form>
-</body>
-</html>
+    <link rel="stylesheet" href="{% static 'mul.css' %}">
+
+</head>
+
+<br><br>
+<br>
+{% if user.is_authenticated %}
+<h3 class="text-center">Edit Order</h3>
+<div class="container well ">
+    {% if submitted %}
+      Your order was updated successfully!!
+    {% else %}
+    <form action=""  id="personForm" class="order" data-cities-url="{% url 'ajax_load_cities' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="row" id="id_repeat">
+                <div class="repeat" >
+                    <div class="form-group col-md-3 mb-3">
+                        <p>Project Name</p>
+                        <select class="form-control" name ="projectname" >
+                             {% for project in form.projectname %}
+                             {{project}}
+                             {% endfor %}
+                         </select>
+                    </div>
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Category</p>
+                           <select name="category" id="category" class="form-control">
+                                {% for cat in form.category %}
+                                {{cat}}
+                                {% endfor %}
+                           </select>
+                    </div>
+                    <div class="form-group col-md-2 margin-right-10">
+                        <p>Product</p>
+                        <select class="form-control" name ="product" id="id_product">
+                            {% for product in form.product %}
+                            {{product}}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2 margin-right-10">
+                        <p>Quantity</p>
+                        <input type="number" value={{order.quantity}} name="quantity" id="q-name" class="form-control">
+
+                    </div>
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Unit</p>
+                        <select value = {{order.unit}} name="unit" class="form-control" id="unit">
+                            {% for unit in form.unit %}
+                            {{unit}}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2 mb-2">
+                        <p>Remarks</p>
+                        <input type="text" value = {{order.remarks}} name="remarks" id="remarks" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2 mb-1">
+                        <p>Status</p>
+                        <select name="status" class="form-control">
+                            {% for status in form.status %}
+                            {{status}}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+                <div class="form-group">
+                    <input type="submit" name=""  value="Update Order" class="btn btn-success">
+                </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+
+</script>
+    {% endif %}
+{% else %}
+Login First
+</div>
+{% endif %}
+
 {% endblock %}

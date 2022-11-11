@@ -11,10 +11,9 @@
         <h1>SPK</h1>
         <div class="topnav">
              <a href="{% url 'dohome' %}">Home</a>
-             <a href="{% url 'testneworder' %}">New Order</a>
-             <a href="{% url 'newform' %}">New Order</a>
+             <a href="{% url 'orders' %}"> New Order(s)</a>
              <a href="{% url 'approveorder' %}">Approve Order</a>
-             <a href="{% url 'report' %}">Report</a>
+             <a href="{% url 'inventory' %}">Report</a>
              <a href="{% url 'registration' %}">Registration</a>
              {% if user.is_authenticated %}
                 <a href="{% url 'dologout' %}">Logout</a>

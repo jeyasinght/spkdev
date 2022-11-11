@@ -1,13 +1,13 @@
+import re
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import order_form
-from .models import order_model, Category, Product
+from .models import order_model, Product, Projects, Category, Units
 from django.http import HttpResponseRedirect, HttpResponse
 import csv
+import datetime
 
-
-# Create your views here.
 
 # Create your views here.
 
@@ -40,21 +40,6 @@ def dologout(request):
 
 
 def newOrder(request):
-    # if this is a POST request we need to process the form data
-    #  if request.method == 'POST':
-    # create a form instance and populate it with data from the request:
-    # form = NameForm(request.POST)
-    # check whether it's valid:
-    # if form.is_valid():
-    # process the data in form.cleaned_data as required
-    # ...
-    # redirect to a new URL:
-    # return HttpResponseRedirect('/thanks/')
-    #     return redirect('dohome')
-    # if a GET (or any other method) we'll create a blank form
-    # else:
-    # form = NameForm()
-
     return render(request, 'order/new_order.html', {})
 
 
@@ -63,7 +48,7 @@ def viewOrder(request):
     return render(request, 'order/view_order.html', {'all': all_orders})
 
 
-def editOrder(request, order_id):
+def editOrder_old(request, order_id):
     order = order_model.objects.get(pk=order_id)
     form = order_form(request.POST or None, instance=order)
     if form.is_valid():
@@ -72,6 +57,39 @@ def editOrder(request, order_id):
         task_list.save()
         return redirect('approveorder')
     return render(request, 'order/edit_order.html', {'order': order, 'form': form})
+
+
+def editOrder(request, order_id):
+    order = order_model.objects.get(pk=order_id)
+    form = order_form(request.POST or None, instance=order)
+    print(order)
+    print(form)
+    if request.method == 'POST':
+        oprojectname = request.POST.get('projectname')
+        projectname = Projects.objects.get(id=oprojectname)
+        ocategory = request.POST.get('category')
+        category = Category.objects.get(id=ocategory)
+        oproduct = request.POST.get('product')
+        product = Product.objects.get(id=oproduct)
+        quantity = request.POST.get('quantity')
+        ounit = request.POST.get('unit')
+        unit = Units.objects.get(id=ounit)
+        remarks = request.POST['remarks']
+        order_date = datetime.datetime.now()
+        status = request.POST['status']
+        order.category = category
+        order.order_date = order_date
+        order.projectname = projectname
+        order.product = product
+        order.quantity = quantity
+        order.remarks = remarks
+        order.status = status
+        order.unit = unit
+        order.approver = request.user.username
+        order.save()
+        return redirect('approveorder')
+    else:
+        return render(request, 'order/edit_order.html', {'order': order, 'form': form})
 
 
 def approveOrder(request):
@@ -117,11 +135,19 @@ def load_cities1(request):
 
 
 def load_cities(request):
-    category_id = request.GET.get('category_id')
-    print(category_id)
-    products = Product.objects.filter(category_id=category_id).all()
-    return render(request, 'persons/city_dropdown_list_options.html', {'cities': products})
+    category = request.GET.get('category')
+    products = Product.objects.filter(category=category).all()
+    print(products)
+    return render(request, 'order/orders.html', {'products': products})
     # return JsonResponse(list(cities.values('id', 'name')), safe=False)
+
+
+def loadproducts(request):
+    category_id = request.GET.get('category')
+    print(category_id)
+    products = Product.objects.filter(category_id=category_id).order_by('name')
+    print(products)
+    return render(request, 'order/courses_dropdown_list_options.html', {'products': products})
 
 
 def formorder1(request):
@@ -151,7 +177,7 @@ def exporttoCSV(request):
     # add column heading to CSV file
 
     writer.writerow(
-        ['#', 'Order Date', 'Requester', 'Project Name', 'Product Category', 'Product', 'Quantity', 'Remarks',
+        ['#', 'Order Date', 'Requester', 'Project Name', 'Product Category', 'Product', 'Quantity', 'Unit', 'Remarks',
          'Approver', 'Approved Date', 'Status'])
 
     # loop through the order
@@ -160,6 +186,62 @@ def exporttoCSV(request):
         i = i + 1
         writer.writerow(
             [i, order.order_date, order.requester, order.projectname, order.category, order.product, order.quantity,
-             order.remarks, order.approver, order.approved_date, order.status])
+             order.unit, order.remarks, order.approver, order.approved_date, order.status])
 
     return response
+
+
+def orders(request):
+    submitted = False
+    if request.method == "POST":
+        oprojectname = request.POST.get('projectname')
+        projectname = Projects.objects.get(id=oprojectname)
+        ocategory = request.POST.getlist('programming[]')
+        oproduct = request.POST.getlist('product[]')
+        oquantity = request.POST.getlist('quantity[]')
+        ounit = request.POST.getlist('unit[]')
+        oremarks = request.POST.getlist('remarks[]')
+        order_date = datetime.datetime.now()
+        status = "Requested"
+        count = len(ocategory)
+        for i in range(count):
+            category = Category.objects.get(id=ocategory[i])
+            product = Product.objects.get(id=oproduct[i])
+            quantity = oquantity[i]
+            unit = Units.objects.get(id=ounit[i])
+            remarks = oremarks[i]
+            order = order_model()
+            order.category = category
+            order.order_date = order_date
+            order.projectname = projectname
+            order.product = product
+            order.quantity = quantity
+            order.remarks = remarks
+            order.status = status
+            order.unit = unit
+            order.requester = request.user
+            order.save()
+        # return HttpResponseRedirect('/orders?submitted=True')
+        return render(request, 'order/postorderform.html', {'submitted': 'True'})
+    else:
+        projects = Projects.objects.all()
+        categories = Category.objects.all()
+        punits = Units.objects.all()
+        return render(request, 'order/orders.html', {'cities': projects, 'categories': categories, 'punits': punits})
+
+
+def inventory(request):
+    if request.method == "POST":
+        oprojectname = request.POST.get('projectname')
+        projectname = Projects.objects.get(id=oprojectname)
+
+        orders = order_model.objects.filter(projectname_id=oprojectname).order_by("id")
+        # ocategory = request.POST.get('programming')
+        # oproduct = request.POST.get('product')
+        # return HttpResponseRedirect('/orders?submitted=True')
+        return render(request, 'report/report.html', {'orders': orders})
+    else:
+        projects = Projects.objects.all()
+        categories = Category.objects.all()
+        punits = Units.objects.all()
+        return render(request, 'report/report.html', {'cities': projects, 'categories': categories, 'punits': punits})

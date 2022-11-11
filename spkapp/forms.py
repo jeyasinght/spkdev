@@ -8,7 +8,7 @@ from .models import order_model, Category, Product
 class order_form(ModelForm):
     class Meta:
         model = order_model
-        fields = ('projectname', 'category', 'product', 'quantity', 'remarks', 'order_date', 'status')
+        fields = ('projectname', 'category', 'product', 'quantity', 'unit', 'remarks', 'order_date', 'status')
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)

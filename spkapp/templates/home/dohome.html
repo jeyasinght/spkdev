@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>SPK Home</title>
     {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'home_form.css' %}">
 </head>
 {% csrf_token %}
@@ -14,7 +15,7 @@
   {% if user.is_authenticated %}
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
       {% if all %}
-        <table class="table-wrapper-scroll-y">
+        <table class="table-wrapper-scroll-y text-center">
              <thead>
                     <tr>
                       <th scope="col">#</th>
