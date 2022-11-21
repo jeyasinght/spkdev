@@ -19,6 +19,7 @@
              <thead>
                     <tr>
                       <th scope="col">#</th>
+                      <th scope="col">Order No</th>
                       <th scope="col">Order Date</th>
                       <th scope="col">Requester</th>
                       <th scope="col">Project Name</th>
@@ -27,6 +28,7 @@
                       <th scope="col">Quantity</th>
                       <th scope="col">Remarks</th>
                       <th scope="col">Approver</th>
+                      <th scope="col">Vendor</th>
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                     </tr>
@@ -35,6 +37,7 @@
                <tbody>
                  <tr>
                      <th scope="row">{{ forloop.counter }}</th>
+                     <td>{{order.orderno}} </td>
                      <td>{{order.order_date}} </td>
                      <td>{{order.requester}} </td>
                      <td>{{order.projectname}} </td>
@@ -43,6 +46,7 @@
                      <td>{{order.quantity}} </td>
                      <td>{{order.remarks}} </td>
                      <td>{{order.approver}} </td>
+                     <td>{{order.vendor}} </td>
                      <td>{{order.approved_date}} </td>
                      <td>{{order.status}} </td>
                  </tr>

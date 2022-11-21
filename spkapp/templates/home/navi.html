@@ -6,14 +6,27 @@
     <title>SPK Home </title>
     <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
 </head>
+<style>
+
+
+    </style>
+
 <body>
     <header>
-        <h1>SPK</h1>
+
+                <a class="navbar-brand avatar">
+                  <img src="{% static 'spk.jpeg' %}" width="90" height="80" class="avatar"></a>
+
+         <div class="col-md-2 mb-2">
+            <h3>SPK Constructions & Engineering</h3>
+     </div>
+
         <div class="topnav">
              <a href="{% url 'dohome' %}">Home</a>
              <a href="{% url 'orders' %}"> New Order(s)</a>
-             <a href="{% url 'approveorder' %}">Approve Order</a>
-             <a href="{% url 'inventory' %}">Report</a>
+             <a href="{% url 'approveorder' 'Requested' %}">Approve Order</a>
+             <a href="{% url 'report' %}">Report</a>
+             <a href="{% url 'report_dup' %}">Report_Dup</a>
              <a href="{% url 'registration' %}">Registration</a>
              {% if user.is_authenticated %}
                 <a href="{% url 'dologout' %}">Logout</a>

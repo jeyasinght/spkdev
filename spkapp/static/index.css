@@ -15,23 +15,18 @@ header, footer{
 }
 
 header{
-    height:8vh;
+    height: 8vh;
 
 }
-header h1{
+header h3{
     position:absolute;
-    margin-top: 10px;
-    left: 2%;
+    margin-top: 20px;
+    left: 0%;
 }
 
 footer{
-    height:10vh;
+    height:9vh;
     bottom:0;
-}
-
-footer h1{
-    position:absolute;
-    left: 45%;
 }
 
 .topnav {
@@ -41,7 +36,7 @@ footer h1{
 .topnav a{
     position:relative;
     left: 35%;
-    top: 25px;
+    top: 30px;
     color:white;
     text-decoration: none;
     margin-right: 20px;
@@ -51,5 +46,15 @@ footer p{
     left:40%;
     bottom:20px;
     color: #fff;
+}
+.navbar-brand .avatar{
+    float: left;
+    height: 60px;
+    /* padding: 15px 15px; */
+    font-size: 18px;
+    line-height: 20px;
+}
+.avatar{
+    border-radius: 50%;
 }
 

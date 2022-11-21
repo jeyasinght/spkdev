@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Details</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -30,7 +31,7 @@
     {% else %}
     <form action=""  id="personForm" class="order" data-cities-url="{% url 'ajax_load_cities' %}" method="POST">
         {% csrf_token %}
-
+        {{orders|safe}}
                 <div class="form-group col-md-2 mb-2">
                         <p><b>Project Name</b></p>
                         <select class="form-control" name ="projectname" >
@@ -81,55 +82,36 @@
     </form>
 </div>
 {% if orders %}
-<div class="container-fluid text-center table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-bordered" style="border: 1px solid;">
+<div class="container-fluid text-center table-wrapper-scroll-y my-custom-scrollbar">   
+    <table class="table table-bordered" style="border: 1px solid; ">
         <thead>
             <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Order No</th>
-                    <th scope="col">Requester</th>
                     <th scope="col">Project Name</th>
                     <th scope="col">Product Category</th>
                     <th scope="col">Product</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Remarks</th>
-                    <th scope="col">Approver</th>
-                    <th scope="col">Vendor</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Order Date</th>
-                    <th scope="col">Approved Date</th>
             </tr>
           </thead>
-
+        
         <tbody>
             {% for order in orders %}
           <tr class="table-info">
               <th scope="row">{{ forloop.counter }}</th>
-              <td>{{order.orderno}} </td>
-              <td>{{order.requester}} </td>
               <td>{{order.projectname}} </td>
               <td>{{order.category}} </td>
               <td>{{order.product}} </td>
-              <td>{{order.quantity}} </td>
-              <td>{{order.unit}} </td>
-              <td>{{order.remarks}} </td>
-              <td>{{order.approver}} </td>
-              <td>{{order.vendor}} </td>
-              <td>{{order.status}} </td>
-              <td>{{order.order_date}} </td>
-              <td>{{order.approved_date}} </td>
-
+              <td>{{order.quantity__sum}} </td>
           </tr>
           {% endfor %}
         <tbody>
-
+       
     </table>
 </div>
 {% endif %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-
+	
     function populate(c1){
         var y = c1.split("_")
         var c1=document.getElementById(c1);
@@ -145,7 +127,7 @@
             }
         });
     }
-
+    
 
 </script>
     {% endif %}

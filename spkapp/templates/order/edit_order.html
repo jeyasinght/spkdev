@@ -21,13 +21,13 @@
     {% if submitted %}
       Your order was updated successfully!!
     {% else %}
-    <form action=""  id="personForm" class="order" data-cities-url="{% url 'ajax_load_cities' %}" method="POST">
+    <form action=""  id="personForm" class="order" method="POST">
         {% csrf_token %}
         <div class="form-group">
             <div class="row" id="id_repeat">
                 <div class="repeat" >
                     <div class="form-group col-md-3 mb-3">
-                        <p>Project Name</p>
+                        <p><b>Project Name</b></p>
                         <select class="form-control" name ="projectname" >
                              {% for project in form.projectname %}
                              {{project}}
@@ -35,7 +35,7 @@
                          </select>
                     </div>
                     <div class="form-group col-md-2 mb-1">
-                        <p>Category</p>
+                        <p><b>Category</b></p>
                            <select name="category" id="category" class="form-control">
                                 {% for cat in form.category %}
                                 {{cat}}
@@ -43,7 +43,7 @@
                            </select>
                     </div>
                     <div class="form-group col-md-2 margin-right-10">
-                        <p>Product</p>
+                        <p><b>Product</b></p>
                         <select class="form-control" name ="product" id="id_product">
                             {% for product in form.product %}
                             {{product}}
@@ -52,13 +52,14 @@
                     </div>
 
                     <div class="form-group col-md-2 margin-right-10">
-                        <p>Quantity</p>
+                        <p><b>Quantity</b></p>
                         <input type="number" value={{order.quantity}} name="quantity" id="q-name" class="form-control">
 
                     </div>
                     <div class="form-group col-md-2 mb-1">
-                        <p>Unit</p>
-                        <select value = {{order.unit}} name="unit" class="form-control" id="unit">
+                        <p><b>Unit</b></p>
+                        <select name="unit" class="form-control" id="unit">
+                            <option disabled="true" selected>--Select Unit--</option>
                             {% for unit in form.unit %}
                             {{unit}}
                             {% endfor %}
@@ -66,12 +67,27 @@
                     </div>
 
                     <div class="form-group col-md-2 mb-2">
-                        <p>Remarks</p>
+                        <p><b>Remarks</b></p>
                         <input type="text" value = {{order.remarks}} name="remarks" id="remarks" class="form-control">
                     </div>
 
+                    <div class="form-group col-md-2 mb-2">
+                        <p><b>Order No</b></p>
+                        <input type="text" value = {{order.orderno}} name="orderno" id="orderno" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group col-md-2 mb-2">
+                        <p><b>Vendor</b></p>
+                        <select class="form-control" name ="vendor" id="id_vendor">
+                            {% for ven in form.vendor %}
+                            {{ven.name}}
+                            {{ven}}
+                            {% endfor %}
+                        </select>
+                        </div>
+
                     <div class="form-group col-md-2 mb-1">
-                        <p>Status</p>
+                        <p><b>Status</b></p>
                         <select name="status" class="form-control">
                             {% for status in form.status %}
                             {{status}}

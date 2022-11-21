@@ -5,25 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Details</title>
-     <link rel="stylesheet" href="{% static 'orderform.css' %}">
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <br/> <br/>
 
 {% if user.is_authenticated %}
-<h1>Add order form</h1>
-    {% if submitted %}
-      Your order was submitted successfully!!
-    {% else %}
-    <form action=""  id="personForm" class="order" data-cities-url="{% url 'ajax_load_cities' %}" method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" name="" value="Submit Order">
-    </form>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-{% endif %}
+    <div class="container-fluid well">
+        {% if submitted %}
+        <h3>Order was submitted successfully!</h3>
+        {% else %}
+        {% endif %}
+    </div>
+
 {% else %}
-Login First
+    Login First
 {% endif %}
 </body>
 </html>
